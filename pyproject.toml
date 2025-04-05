@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ml-in-manufacturing"
+version = "1.0.0"
+description = "Real-plant vs. digital-twin training data for machine-learning fault detection on an industrial press station"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = [
+    "digital-twin",
+    "fault-detection",
+    "industry-4.0",
+    "machine-learning",
+    "mqtt",
+    "plc",
+    "siemens-simit",
+    "smart-factory",
+    "virtual-commissioning",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Manufacturing",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "joblib>=1.3",
+    "matplotlib>=3.7",
+    "numpy>=1.24",
+    "paho-mqtt>=2.0",
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+]
+
+[project.optional-dependencies]
+# ruff is pinned: new releases can add rules or change formatting and fail CI.
+dev = ["pytest>=7.4", "ruff==0.16.10"]
+
+[project.scripts]
+ml-manufacturing = "ml_manufacturing.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["integration: needs a running MQTT broker (set ML_MANUFACTURING_MQTT_BROKER=host[:port])"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "NPY", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["ml_manufacturing"]
