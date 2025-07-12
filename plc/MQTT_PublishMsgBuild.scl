@@ -1,0 +1,66 @@
+#tempString := WString#'';
+"appendSysTime"(str := #tempString, separator := WString#',');
+
+"appendBoolValue"(boolVal := "Shuttle_in_Station_von_St10", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "LockShuttle_an_St10", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "StartShuttle_an_St10", str := #tempString, separator := WString#',');
+"appendByteValue"(byteVal := "ShuttleInitFlagsByteVonSt10", str := #tempString, separator := WString#',');
+
+"appendIntValue"(intVal := "Stationsdaten".Betriebszustand, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten"."Station sicher", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten"."StationIsWorking", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten"."Station in Grundstellung", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten".StartWorkVonAblaufketteShuttle, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten"."Auftragssimulation aktiv", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "S13 Hand (links)", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "S13 Auto (rechts)", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "St10_in_AUTO", str := #tempString, separator := WString#',');
+
+"appendBoolValue"(boolVal := "LichtvorhangFrei", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Bereichshalt Nicht", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "SchalterTuerZu", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "SchaltmatteGedrueckt", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "VentilRueckfuehrungKeineDruckl", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "VentilAnsteuerung", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "KeinNotHaltExtern von St10", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "SchluesselFreigabe", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "F01000_4/8F-DIDC24V".QBAD, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "F01006_4/8F-DIDC24V_2".QBAD, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "F01012_4F-DODC24V/2A".QBAD, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten"."Safety Status Bits"."Safety Ok - Aktoren freigegeben", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten"."Safety Status Bits"."ET200S - Baugruppe passiviert", str := #tempString, separator := WString#',');
+
+"appendBoolValue"(boolVal := "B11 Pressenarm untere Endlage", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "B12 Pressenarm obere Endlage", str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten".Anfahrt_Oben, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten".Anfahrt_50Proz, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Stationsdaten".Anfahrt_Unten, str := #tempString, separator := WString#',');
+"appendRealvalue"(realVal := "Stationsdaten".Sollpos_percent, str := #tempString, separator := WString#',');
+"appendRealvalue"(realVal := "Stationsdaten".ActPosPercCtrlOutp, str := #tempString, separator := WString#',');
+
+"appendWordValue"(wordVal := "M1 Ventil Ist-Druck", str := #tempString, separator := WString#',');
+"appendWordValue"(wordVal := "M1 Ventil Soll-Druck", str := #tempString, separator := WString#',');
+"appendWordValue"(wordVal := "M2 Ventil Ist-Druck", str := #tempString, separator := WString#',');
+"appendWordValue"(wordVal := "M2 Ventil Soll-Druck", str := #tempString, separator := WString#',');
+
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_busyRead, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_errorRead, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_presenceRead, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_busyWrite, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_errorWrite, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_presenceWrite, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_busyReset, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_doneReset, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_errorReset, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "RFIDInterface".RFID_resetOk, str := #tempString, separator := WString#',');
+
+"appendBoolValue"(boolVal := "Field_Device_Diagnostic_DB".Main_PLC_60, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Field_Device_Diagnostic_DB".ET200s_St_60, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Field_Device_Diagnostic_DB".State_PROFI_60, str := #tempString, separator := WString#',');
+"appendBoolValue"(boolVal := "Field_Device_Diagnostic_DB".HMI_60, str := #tempString, separator := WString#'');
+
+#tempLength := LEN(#tempString);
+FOR #MsgCnt := 0 TO #tempLength - 1 DO
+    "MQTT_Data".mqtt_pubMsgPayload[#MsgCnt] := WCHAR_TO_CHAR(IN := #tempString[#MsgCnt + 1]);
+END_FOR;
+"MQTT_Data".mqtt_pubMsgLen := #tempLength;
