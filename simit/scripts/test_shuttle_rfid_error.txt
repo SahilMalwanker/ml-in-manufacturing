@@ -1,0 +1,69 @@
+// 9) ----------------------- Shuttle RFID presence detection failure -----------------------
+// Fault case 9: the RF180C reader no longer reports a tag although a shuttle is in the station.
+// SIMIT_SHM_RFIDPresenceForcedToZero gates the presence signal of the reader in the chart
+// "RFID_St60" (NOT -> AND), forcing presenceRead/presenceWrite to zero while it is True.
+// The fault is active from the start of the acquisition.
+// Transcribed from the SIMIT project of the ST60 digital twin (script "Test_Shuttle_RFID_error").
+
+// STEP 1: Stop all running simulations and start the SIMIT simulation from scratch
+
+// Handshake to the data acquisition client -> stops NX MCD and the SIMIT simulation
+INCLUDE "STOP_DA"
+STOP
+
+// Initialise the SIMIT simulation
+INIT
+
+START
+
+// STEP 2: Initialise the RFID tag and the other PLC signals coming from NX MCD
+
+INCLUDE "InitNXSimulation"
+
+// STEP 3: Change the operation mode to initialise all functions and sequence cascades
+
+// Switch to abort operation mode
+INCLUDE "SwitchMode_Abort"
+
+INCLUDE "InitNXSimulation"
+
+// Switch to automatic operation mode
+INCLUDE "SwitchMode_Auto"
+
+INCLUDE "InitNXSimulation"
+
+GO-FOR 10000
+
+// STEP 4: Data acquisition of this test case
+
+// Handshake to the data acquisition client -> starts NX MCD
+INCLUDE "START_DA"
+
+// Handshake to the data acquisition client -> starts a new test-case file
+INCLUDE "OPENFILE"
+
+// STEP ERROR-1: Introduce the error
+
+// Force the RFID presence signal to zero
+FIX "SHM_mem/SIMIT_SHM_RFIDPresenceForcedToZero"
+"SHM_mem/SIMIT_SHM_RFIDPresenceForcedToZero" = True
+
+GO-FOR 28777 // duration of the data acquisition
+
+// Handshake to the data acquisition client -> wait until the acquisition has finished
+// (controlled by the MQTT part of the data acquisition client)
+INCLUDE "WAIT_END_OF_DA"
+
+// Handshake to the data acquisition client -> stops NX MCD
+INCLUDE "STOP_DA"
+
+// STEP ERROR-2: Remove the error for the following test cases
+
+// Release the sensor
+UNFIX "SHM_mem/SIMIT_SHM_RFIDPresenceForcedToZero"
+
+// STEP 5: Stop the simulation
+
+STOP
+
+// ----------------------------------- End -----------------------------------

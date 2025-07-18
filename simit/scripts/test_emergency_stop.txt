@@ -1,0 +1,66 @@
+// 6) ----------------------- Emergency stop -----------------------
+// Fault case 6: an external emergency stop arrives from station 10.
+// Transcribed from the SIMIT project of the ST60 digital twin (script "Test_Emergency_Stop").
+
+// STEP 1: Stop all running simulations and start the SIMIT simulation from scratch
+
+// Handshake to the data acquisition client -> stops NX MCD and the SIMIT simulation
+INCLUDE "STOP_DA"
+STOP
+
+// Initialise the SIMIT simulation
+INIT
+
+START
+
+// STEP 2: Initialise the RFID tag and the other PLC signals coming from NX MCD
+
+INCLUDE "InitNXSimulation"
+
+// STEP 3: Change the operation mode to initialise all functions and sequence cascades
+
+// Switch to abort operation mode
+INCLUDE "SwitchMode_Abort"
+
+INCLUDE "InitNXSimulation"
+
+// Switch to automatic operation mode
+INCLUDE "SwitchMode_Auto"
+
+INCLUDE "InitNXSimulation"
+
+GO-FOR 10000
+
+// STEP 4: Data acquisition of this test case
+
+// Handshake to the data acquisition client -> starts NX MCD
+INCLUDE "START_DA"
+
+// Handshake to the data acquisition client -> starts a new test-case file
+INCLUDE "OPENFILE"
+
+GO-FOR 1500
+
+// STEP ERROR-1: Introduce the error
+
+// Fix the sensor value to a constant state
+FIX "S71500-ET200MP-Station_1/KeinNotHaltExtern von St10"
+
+"S71500-ET200MP-Station_1/KeinNotHaltExtern von St10" = False
+GO-FOR 100
+
+GO-FOR 27277 // duration of the data acquisition
+
+// Handshake to the data acquisition client -> wait until the acquisition has finished
+// (controlled by the MQTT part of the data acquisition client)
+INCLUDE "WAIT_END_OF_DA"
+
+// Handshake to the data acquisition client -> stops NX MCD
+INCLUDE "STOP_DA"
+
+// STEP ERROR-2: Remove the error for the following test cases
+
+// Release the sensor
+UNFIX "S71500-ET200MP-Station_1/KeinNotHaltExtern von St10"
+
+// ----------------------------------- End -----------------------------------

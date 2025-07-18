@@ -1,0 +1,56 @@
+// 8) ----------------------- Press arm position sensor failure -----------------------
+// Fault case 8: the press-arm position sensor freezes at its last value (stuck sensor).
+// The chart "Forwarding_TIA_MCD" switches the position forwarded to the PLC from the live
+// NX MCD value to SIMIT_SHM_StuckPosition as soon as SIMIT_SHM_ProvPosFault becomes True.
+// The delay before the fault (GO-FOR 3000 here) was varied per recording: 1500 ... 4000 ms.
+// Transcribed from the SIMIT project of the ST60 digital twin (script "Test_NEW_Press_SensorB12").
+
+// STEP 1-3: standard start-up, identical to test_normal.txt
+INCLUDE "STOP_DA"
+STOP
+INIT
+START
+INCLUDE "InitNXSimulation"
+INCLUDE "SwitchMode_Abort"
+INCLUDE "InitNXSimulation"
+INCLUDE "SwitchMode_Auto"
+INCLUDE "InitNXSimulation"
+
+GO-FOR 10000
+
+// STEP 4: Data acquisition of this test case
+
+// Handshake to the data acquisition client -> starts NX MCD
+INCLUDE "START_DA"
+
+// Handshake to the data acquisition client -> starts a new test-case file
+INCLUDE "OPENFILE"
+
+FIX "SHM_mem/SIMIT_SHM_ProvPosFault"
+"SHM_mem/SIMIT_SHM_ProvPosFault" = False
+
+GO-FOR 3000
+
+// STEP ERROR-1: Introduce the error - freeze the position at its current value
+FIX "SHM_mem/SIMIT_SHM_StuckPosition"
+"SHM_mem/SIMIT_SHM_StuckPosition" = "SHM_mem/SIMIT_SHM_FromMCDToPLC_B10_Pressenarm_Ist_Position"
+"SHM_mem/SIMIT_SHM_ProvPosFault" = True
+
+GO-FOR 100
+
+GO-FOR 27677 // duration of the data acquisition
+
+// Handshake to the data acquisition client -> wait until the acquisition has finished
+// (controlled by the MQTT part of the data acquisition client)
+INCLUDE "WAIT_END_OF_DA"
+
+// Handshake to the data acquisition client -> stops NX MCD
+INCLUDE "STOP_DA"
+
+// STEP ERROR-2: Remove the error for the following test cases
+
+// Release the sensor
+UNFIX "SHM_mem/SIMIT_SHM_StuckPosition"
+UNFIX "SHM_mem/SIMIT_SHM_ProvPosFault"
+
+// ----------------------------------- End -----------------------------------
