@@ -1,0 +1,4 @@
+model,train_data,test_data,window,accuracy_pct,precision_pct
+DT,combined,combined,0,82,92
+DT,combined,combined,3,96,98
+DT,combined,combined,5,82,93

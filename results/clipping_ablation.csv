@@ -1,0 +1,17 @@
+scenario,model,window,clip,accuracy,f1
+D-R,svc,3,False,0.029,0.0063
+D-R,svc,3,True,0.4847,0.6986
+D-R,dt,3,False,0.6822,0.8251
+D-R,dt,3,True,0.6822,0.8251
+D-R,rf,3,False,0.4832,0.7246
+D-R,rf,3,True,0.4832,0.7246
+D-R,mlp,3,False,0.0675,0.2357
+D-R,mlp,3,True,0.4545,0.5574
+R-D,svc,3,False,0.6534,0.5173
+R-D,svc,3,True,0.6101,0.4905
+R-D,dt,3,False,0.4418,0.5173
+R-D,dt,3,True,0.4418,0.5173
+R-D,rf,3,False,0.833,0.6555
+R-D,rf,3,True,0.833,0.6555
+R-D,mlp,3,False,0.6866,0.472
+R-D,mlp,3,True,0.68,0.4794

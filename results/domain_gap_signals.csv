@@ -1,0 +1,52 @@
+signal,type,plant_distinct,twin_distinct,plant_min,plant_max,twin_min,twin_max,plant_mean,twin_mean
+Shuttle_in_Station_von_St10,Bool,2,2,0.0,1.0,0.0,1.0,0.6261,0.9619
+LockShuttle_an_St10,Bool,2,2,0.0,1.0,0.0,1.0,0.5538,0.9209
+StartShuttle_an_St10,Bool,2,2,0.0,1.0,0.0,1.0,0.0179,0.0029
+ShuttleInitFlagsByteVonSt10,Byte,1,1,6.0,6.0,3.0,3.0,6.0,3.0
+Stationsdaten.Betriebszustand,Int,3,2,1.0,5.0,1.0,5.0,4.7259,4.9961
+Stationsdaten.Station sicher,Bool,2,2,0.0,1.0,0.0,1.0,0.9411,0.999
+Stationsdaten.StationIsWorking,Bool,2,2,0.0,1.0,0.0,1.0,0.4512,0.8842
+Stationsdaten.Station in Grundstellung,Bool,2,1,0.0,1.0,0.0,0.0,0.5886,0.0
+Stationsdaten.StartWorkVonAblaufketteShuttle,Bool,2,2,0.0,1.0,0.0,1.0,0.0006,0.0039
+Stationsdaten.Auftragssimulation aktiv,Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+S13 Hand (links),Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+S13 Auto (rechts),Bool,1,2,1.0,1.0,0.0,1.0,1.0,0.999
+St10_in_AUTO,Bool,1,1,1.0,1.0,1.0,1.0,1.0,1.0
+LichtvorhangFrei,Bool,1,1,1.0,1.0,1.0,1.0,1.0,1.0
+Bereichshalt Nicht,Bool,1,1,1.0,1.0,1.0,1.0,1.0,1.0
+SchalterTuerZu,Bool,1,1,1.0,1.0,1.0,1.0,1.0,1.0
+SchaltmatteGedrueckt,Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+VentilRueckfuehrungKeineDruckl,Bool,2,1,0.0,1.0,0.0,0.0,0.0594,0.0
+VentilAnsteuerung,Bool,2,1,0.0,1.0,0.0,0.0,0.9411,0.0
+KeinNotHaltExtern von St10,Bool,1,1,1.0,1.0,1.0,1.0,1.0,1.0
+SchluesselFreigabe,Bool,2,1,0.0,1.0,0.0,0.0,0.0017,0.0
+F01000_4/8F-DIDC24V.QBAD,Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+F01006_4/8F-DIDC24V_2.QBAD,Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+F01012_4F-DODC24V/2A.QBAD,Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+Stationsdaten.Safety Status Bits.Safety Ok - Aktoren freigegeben,Bool,2,2,0.0,1.0,0.0,1.0,0.9411,0.999
+Stationsdaten.Safety Status Bits.ET200S - Baugruppe passiviert,Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+B11 Pressenarm untere Endlage,Bool,2,1,0.0,1.0,0.0,0.0,0.0202,0.0
+B12 Pressenarm obere Endlage,Bool,2,1,0.0,1.0,0.0,0.0,0.5639,0.0
+Stationsdaten.Anfahrt_Oben,Bool,2,2,0.0,1.0,0.0,1.0,0.0953,0.1363
+Stationsdaten.Anfahrt_50Proz,Bool,2,2,0.0,1.0,0.0,1.0,0.1665,0.3454
+Stationsdaten.Anfahrt_Unten,Bool,2,2,0.0,1.0,0.0,1.0,0.1844,0.7298
+Stationsdaten.Sollpos_percent,Real,3,3,0.0,81.0,0.0,81.0,26.8487,49.4792
+Stationsdaten.ActPosPercCtrlOutp,Real,85,73,-0.31,100.0,0.0,80.07,23.263,37.2988
+M1 Ventil Ist-Druck,Word,288,1,6.0,15707.0,0.0,0.0,2925.1071,0.0
+M1 Ventil Soll-Druck,Word,485,1443,0.0,27648.0,0.0,27648.0,12831.5611,20062.3376
+M2 Ventil Ist-Druck,Word,323,1,18.0,15773.0,0.0,0.0,6003.2769,0.0
+M2 Ventil Soll-Druck,Word,485,1443,0.0,27648.0,0.0,27648.0,14816.4389,7583.8769
+RFIDInterface.RFID_busyRead,Bool,2,2,0.0,1.0,0.0,1.0,0.0291,0.0259
+RFIDInterface.RFID_errorRead,Bool,1,2,0.0,0.0,0.0,1.0,0.0,0.0059
+RFIDInterface.RFID_presenceRead,Bool,2,2,0.0,1.0,0.0,1.0,0.653,0.9868
+RFIDInterface.RFID_busyWrite,Bool,2,2,0.0,1.0,0.0,1.0,0.0028,0.0117
+RFIDInterface.RFID_errorWrite,Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+RFIDInterface.RFID_presenceWrite,Bool,2,2,0.0,1.0,0.0,1.0,0.653,0.9868
+RFIDInterface.RFID_busyReset,Bool,2,1,0.0,1.0,0.0,0.0,0.0028,0.0
+RFIDInterface.RFID_doneReset,Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+RFIDInterface.RFID_errorReset,Bool,1,1,0.0,0.0,0.0,0.0,0.0,0.0
+RFIDInterface.RFID_resetOk,Bool,1,1,1.0,1.0,1.0,1.0,1.0,1.0
+Field_Device_Diagnostic_DB.Main_PLC_60,Bool,1,1,1.0,1.0,1.0,1.0,1.0,1.0
+Field_Device_Diagnostic_DB.ET200s_St_60,Bool,1,1,1.0,1.0,1.0,1.0,1.0,1.0
+Field_Device_Diagnostic_DB.State_PROFI_60,Bool,1,1,1.0,1.0,0.0,0.0,1.0,0.0
+Field_Device_Diagnostic_DB.HMI_60,Bool,1,1,1.0,1.0,1.0,1.0,1.0,1.0
