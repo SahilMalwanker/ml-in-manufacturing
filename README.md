@@ -13,7 +13,9 @@ This project investigates that question on an industrial pressing station. It co
 
 The repository includes **97 recorded experiments, 51 process signals, nine operating classes, and 100 benchmark configurations**. No PLC, simulator, or pretrained binary is needed to reproduce the offline experiments.
 
-![Accuracy and macro F1 across real-plant, digital-twin, and combined-data scenarios](docs/images/results_overview.png)
+![Replay of a held-out plant run: the press-arm position reading freezes at 63 % and the detector output switches from normal to a press-arm sensor fault](docs/images/detection_demo.gif)
+
+*A held-out plant recording, never used for training, replayed through the same parsing, buffering and prediction code as the MQTT service (first 8 s shown). The position reading freezes while the arm is commanded back up, and the detector flags the fault at the labelled onset. It also raises a few short false alarms, mostly during the fast downstroke.*
 
 > **Key result:** at a three-sample window, the combined-data SVC reaches **96.99% accuracy / 98.44% macro F1**. Training the same model on twin data alone and testing on the plant yields **48.47% accuracy**. A useful digital twin is not automatically an interchangeable source of training data.
 

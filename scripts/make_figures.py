@@ -16,6 +16,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.patches import Rectangle
+from PIL import Image
 
 from ml_manufacturing.daq import elapsed_ms, read_recording
 from ml_manufacturing.datasets import Recording, load_manifest, scenario_data, select
@@ -605,6 +607,96 @@ def realtime_timeline(recordings: list[Recording], detector: FaultDetector) -> N
     _save(fig, "realtime_timeline.png")
 
 
+def detection_demo(recordings: list[Recording], detector: FaultDetector) -> None:
+    """Animated replay of a held-out plant run in which the press-arm position reading freezes."""
+    rec = next(r for r in recordings if r.path.name == "rp_c08_run4.csv")
+    frame = read_recording(rec.path)
+    _, labels = rec.load()
+    t = elapsed_ms(frame) / 1000.0
+    predictor = OnlinePredictor(detector, dedupe=False)
+    predicted = np.full(len(labels), -1)
+    for index, (_, payload) in enumerate(iter_payloads(rec.path)):
+        if (prediction := predictor.update(payload)) is not None:
+            predicted[index] = prediction.code
+    horizon, onset = 8.0, t[np.argmax(labels != 0)]
+    fills = {-1: "#E4E7EB", 0: "#BFE1DB", 8: TWIN}
+    badges = {-1: ("WARMING UP", MUTED), 0: ("NORMAL", PLANT), 8: ("FAULT · press-arm sensor", TWIN)}
+
+    fig = plt.figure(figsize=(9.6, 4.8), dpi=100)
+    grid = fig.add_gridspec(2, 1, height_ratios=[3, 1.1], hspace=0.12, left=0.16, right=0.97, top=0.79, bottom=0.12)
+    position = fig.add_subplot(grid[0])
+    states = fig.add_subplot(grid[1], sharex=position)
+    target, measured = frame["Stationsdaten.Sollpos_percent"], frame["Stationsdaten.ActPosPercCtrlOutp"]
+    position.step(t, target, where="post", color=MUTED, lw=1.6, ls="--", label="commanded position")
+    position.step(t, measured, where="post", color=PLANT, lw=2.6, label="measured position")
+    position.set_ylim(-8, 104)
+    position.set_ylabel("press arm position [%]")
+    position.legend(frameon=False, loc="lower left", bbox_to_anchor=(0, 1.0), ncols=2, fontsize=9.5, borderaxespad=0.2)
+    position.tick_params(labelbottom=False)
+    for row, values in enumerate((labels, predicted)):
+        edges = np.flatnonzero(np.diff(values)) + 1
+        for first, last in zip(np.r_[0, edges], np.r_[edges, len(values) - 1], strict=True):
+            color = fills.get(int(values[first]), TWIN)
+            states.broken_barh([(t[first], t[last] - t[first])], (row - 0.38, 0.76), color=color, lw=0)
+    states.set_yticks([0, 1], ["recorded label", "detector output"])
+    states.set_ylim(1.6, -0.6)
+    states.set_xlim(0, horizon)
+    states.set_xlabel("seconds since the recording started")
+
+    curtains = []
+    for ax, (low, high) in ((position, (-8, 104)), (states, (-0.6, 1.6))):
+        ax.spines[["top", "right"]].set_visible(False)
+        for spine in ax.spines.values():
+            spine.set_zorder(6)
+        curtains.append(ax.add_patch(Rectangle((0, low), horizon + 1, high - low, fc="white", ec="none", zorder=3)))
+    cursors = [ax.axvline(0, color=INK, lw=1.2, zorder=7) for ax in (position, states)]
+    stuck = position.annotate(
+        "reading stays at 63 % while the arm\nis commanded back to 0 %",
+        xy=(onset + 1.0, 63.5),
+        xytext=(onset + 1.5, 28),
+        color=TWIN,
+        fontsize=10.5,
+        fontweight="bold",
+        arrowprops={"arrowstyle": "->", "color": TWIN, "lw": 1.4},
+        zorder=8,
+    )
+    title = "Replaying a held-out plant run through the detector"
+    fig.text(0.015, 0.94, title, fontsize=13, fontweight="bold", color=INK, va="center")
+    subtitle = "Press-arm position sensor fault · SVC trained on plant and twin data · 3-message window"
+    fig.text(0.015, 0.87, subtitle, fontsize=10, color=MUTED, va="center")
+    status = fig.text(0.97, 0.94, "", ha="right", va="center", fontsize=12, fontweight="bold", color="white")
+    status.set_bbox({"boxstyle": "round,pad=0.4", "ec": "none"})
+    clock = fig.text(0.97, 0.87, "", ha="right", va="center", fontsize=9.5, color=MUTED)
+
+    frames = []
+    for now in np.arange(0.0, horizon + 1e-9, 0.1):
+        seen = np.flatnonzero(t <= now)
+        code = int(predicted[seen[-1]]) if len(seen) else -1
+        text, color = badges.get(code, (f"FAULT · class {code}", TWIN))
+        status.set_text(text)
+        status.get_bbox_patch().set_facecolor(color)
+        clock.set_text(f"t = {now:.1f} s  ·  message {len(seen)}")
+        for curtain, cursor in zip(curtains, cursors, strict=True):
+            curtain.set_x(now)
+            cursor.set_xdata([now, now])
+        stuck.set_visible(now >= onset + 0.8)
+        fig.canvas.draw()
+        frames.append(Image.fromarray(np.asarray(fig.canvas.buffer_rgba())).convert("RGB"))
+    plt.close(fig)
+
+    # one palette for all frames keeps colours stable and the file small
+    probe = [frames[0], frames[20], frames[45], frames[-1]]
+    sheet = Image.new("RGB", (probe[0].width, probe[0].height * len(probe)))
+    for i, image in enumerate(probe):
+        sheet.paste(image, (0, i * image.height))
+    palette = sheet.quantize(colors=96, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+    gif = [image.quantize(palette=palette, dither=Image.Dither.NONE) for image in frames]
+    path = IMAGES / "detection_demo.gif"
+    durations = [900] + [80] * (len(gif) - 2) + [3500]
+    gif[0].save(path, save_all=True, append_images=gif[1:], duration=durations, loop=0, optimize=True)
+    print("wrote", path)
+
+
 def main() -> None:
     recordings = load_manifest(MANIFEST)
     bench = pd.read_csv(RESULTS / "benchmark.csv")
@@ -619,7 +711,9 @@ def main() -> None:
     clipping_ablation(recordings)
     decision_tree(recordings)
     train, _ = scenario_data(recordings, "C-C")
-    realtime_timeline(recordings, FaultDetector("svc", WINDOW).fit(train))
+    detector = FaultDetector("svc", WINDOW).fit(train)
+    realtime_timeline(recordings, detector)
+    detection_demo(recordings, detector)
 
 
 if __name__ == "__main__":

@@ -45,7 +45,8 @@ def test_benchmark_has_all_configurations():
 
 
 def test_documentation_images_are_valid():
-    for path in (ROOT / "docs/images").glob("*.png"):
+    for path in [*(ROOT / "docs/images").glob("*.png"), *(ROOT / "docs/images").glob("*.gif")]:
+        assert path.stat().st_size < 3_000_000, path
         with Image.open(path) as image:
             assert image.width >= 600 and image.height >= 200, path
             image.verify()
