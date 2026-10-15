@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SVC test accuracy for each combination of training and test domain"
+     width="1200" height="366" viewBox="0 0 1200 366">
+<style>
+text { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, 'Liberation Sans', sans-serif; }
+.rise { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+.kicker { font-size: 14px; font-weight: 700; letter-spacing: 3px; fill: #5EEAD4; }
+.legend { font-size: 13px; fill: #94A3B8; }
+
+.caption { font-size: 15px; fill: #B6C2CF; }
+.row { font-size: 16px; font-weight: 600; fill: #E2E8F0; }
+.value { font-size: 17px; font-weight: 800; }
+.track { fill: #FFFFFF; fill-opacity: .06; }
+.grow { transform-box: fill-box; transform-origin: left center;
+        animation: grow 1.4s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes grow { from { transform: scaleX(0); } }
+.sweep { animation: sweep 6s ease-in-out infinite both; }
+@keyframes sweep { 45%, 100% { transform: translateX(1000px); } }
+.grid { stroke: #FFFFFF; stroke-opacity: .1; stroke-dasharray: 3 5; }
+.tick { font-size: 12px; fill: #94A3B8; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }</style>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0B1220"/><stop offset="1" stop-color="#0F2E35"/>
+</linearGradient>
+<linearGradient id="accent" x1="0" x2="1">
+<stop offset="0" stop-color="#2DD4BF"/><stop offset="1" stop-color="#FB923C"/>
+</linearGradient>
+<pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+<path d="M32 0H0V32" fill="none" stroke="#FFFFFF" stroke-opacity=".045"/>
+</pattern>
+<filter id="soft" x="-2" y="-2" width="5" height="5">
+<feGaussianBlur stdDeviation="2.2" result="blur"/>
+<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<clipPath id="card"><rect width="1200" height="366" rx="18"/></clipPath>
+<linearGradient id="same" x1="0" x2="1">
+<stop offset="0" stop-color="#2DD4BF"/><stop offset="1" stop-color="#5EEAD4"/>
+</linearGradient>
+<linearGradient id="cross" x1="0" x2="1">
+<stop offset="0" stop-color="#FB923C"/><stop offset="1" stop-color="#FDBA74"/>
+</linearGradient>
+<linearGradient id="barShine" x1="0" x2="1">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".45"/>
+<stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="bar0"><rect x="280" y="108" width="761.0" height="24" rx="12"/></clipPath><clipPath id="bar1"><rect x="280" y="154" width="730.7" height="24" rx="12"/></clipPath><clipPath id="bar2"><rect x="280" y="200" width="475.9" height="24" rx="12"/></clipPath><clipPath id="bar3"><rect x="280" y="246" width="378.1" height="24" rx="12"/></clipPath><clipPath id="bar4"><rect x="280" y="292" width="756.5" height="24" rx="12"/></clipPath>
+</defs>
+<g clip-path="url(#card)">
+<rect width="1200" height="366" fill="url(#bg)"/>
+<rect width="1200" height="366" fill="url(#grid)"/>
+
+<text x="40" y="50" class="kicker rise">DOES TWIN DATA TRANSFER TO THE REAL PLANT?</text>
+<text x="40" y="76" class="caption rise"
+ style="animation-delay:.1s">SVC accuracy on held-out recordings · 3-message window</text>
+<text x="1073.6" y="50" class="legend">both domains</text><circle cx="1062.6" cy="45" r="5" fill="url(#accent)"/><text x="951.2" y="50" class="legend">cross-domain</text><circle cx="940.2" cy="45" r="5" fill="#FB923C"/><text x="836" y="50" class="legend">same domain</text><circle cx="825" cy="45" r="5" fill="#2DD4BF"/>
+<path d="M670 96 V324 M1060 96 V324" class="grid"/>
+
+<text x="262" y="126" text-anchor="end" class="row">Real → Real</text>
+<rect x="280" y="108" width="780" height="24" rx="12" class="track"/>
+<rect x="280" y="108" width="761.0" height="24" rx="12" fill="url(#same)" class="grow"
+ style="animation-delay:0.15s"/>
+<g clip-path="url(#bar0)"><rect x="140" y="108" width="120" height="24" fill="url(#barShine)"
+ class="sweep" style="animation-delay:1.80s"/></g>
+<text x="1078" y="126" class="value rise" fill="#5EEAD4"
+ style="animation-delay:0.90s">97.6%</text>
+<text x="262" y="172" text-anchor="end" class="row">Twin → Twin</text>
+<rect x="280" y="154" width="780" height="24" rx="12" class="track"/>
+<rect x="280" y="154" width="730.7" height="24" rx="12" fill="url(#same)" class="grow"
+ style="animation-delay:0.27s"/>
+<g clip-path="url(#bar1)"><rect x="140" y="154" width="120" height="24" fill="url(#barShine)"
+ class="sweep" style="animation-delay:1.95s"/></g>
+<text x="1078" y="172" class="value rise" fill="#5EEAD4"
+ style="animation-delay:1.02s">93.7%</text>
+<text x="262" y="218" text-anchor="end" class="row">Real → Twin</text>
+<rect x="280" y="200" width="780" height="24" rx="12" class="track"/>
+<rect x="280" y="200" width="475.9" height="24" rx="12" fill="url(#cross)" class="grow"
+ style="animation-delay:0.39s"/>
+<g clip-path="url(#bar2)"><rect x="140" y="200" width="120" height="24" fill="url(#barShine)"
+ class="sweep" style="animation-delay:2.10s"/></g>
+<text x="1078" y="218" class="value rise" fill="#FDBA74"
+ style="animation-delay:1.14s">61.0%</text>
+<text x="262" y="264" text-anchor="end" class="row">Twin → Real</text>
+<rect x="280" y="246" width="780" height="24" rx="12" class="track"/>
+<rect x="280" y="246" width="378.1" height="24" rx="12" fill="url(#cross)" class="grow"
+ style="animation-delay:0.51s"/>
+<g clip-path="url(#bar3)"><rect x="140" y="246" width="120" height="24" fill="url(#barShine)"
+ class="sweep" style="animation-delay:2.25s"/></g>
+<text x="1078" y="264" class="value rise" fill="#FDBA74"
+ style="animation-delay:1.26s">48.5%</text>
+<text x="262" y="310" text-anchor="end" class="row">Combined → Combined</text>
+<rect x="280" y="292" width="780" height="24" rx="12" class="track"/>
+<rect x="280" y="292" width="756.5" height="24" rx="12" fill="url(#accent)" class="grow"
+ style="animation-delay:0.63s"/>
+<g clip-path="url(#bar4)"><rect x="140" y="292" width="120" height="24" fill="url(#barShine)"
+ class="sweep" style="animation-delay:2.40s"/></g>
+<text x="1078" y="310" class="value rise" fill="#F8FAFC"
+ style="animation-delay:1.38s">97.0%</text>
+<text x="280" y="346" text-anchor="middle" class="tick">0%</text>
+<text x="670" y="346" text-anchor="middle" class="tick">50%</text>
+<text x="1060" y="346" text-anchor="middle" class="tick">100%</text>
+
+</g>
+</svg>

@@ -8,7 +8,7 @@ ST60 receives a shuttle carrying a relay/socket assembly, locks it, performs the
 
 ![Original NX MCD station model](images/press_station.png)
 
-The cropped image above shows the project digital twin, not a photograph of the physical station.
+The cropped image above shows the project digital twin, not a photograph of the physical station. The [README](../README.md#the-system) shows the same model running a press cycle next to the PLC signals recorded in that run. The [SIMIT notes](../simit/README.md#acquisition-handshake) describe how SIMIT and the data acquisition client coordinate each recording.
 
 ```mermaid
 flowchart TB

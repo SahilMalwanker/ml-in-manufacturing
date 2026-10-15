@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Machine Learning in Manufacturing: real-plant vs. digital-twin training data for fault detection"
+     width="1200" height="360" viewBox="0 0 1200 360">
+<style>
+text { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, 'Liberation Sans', sans-serif; }
+.rise { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+.kicker { font-size: 14px; font-weight: 700; letter-spacing: 3px; fill: #5EEAD4; }
+.legend { font-size: 13px; fill: #94A3B8; }
+
+.title { font-size: 56px; font-weight: 800; letter-spacing: -1px; }
+.sub { font-size: 17px; fill: #B6C2CF; }
+.chip { fill: #FFFFFF; fill-opacity: .05; stroke: #2DD4BF; stroke-opacity: .45; }
+.chip-text { font-size: 15px; font-weight: 600; fill: #E2E8F0; }
+.lane { font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+.lane-note { font-size: 12px; fill: #7F92A6; }
+.frozen { font-size: 11px; font-weight: 700; letter-spacing: 1px; fill: #FDBA74; }
+.trace { fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round;
+         animation: scroll 5s linear infinite; }
+@keyframes scroll { to { transform: translateX(-240px); } }
+.wire { fill: none; stroke: #CBD5E1; stroke-opacity: .25; stroke-width: 1.6; }
+.core { fill: #0D1B26; stroke: #2DD4BF; stroke-width: 2.5; animation: ring 7s infinite; }
+.core-text { font-size: 22px; font-weight: 800; letter-spacing: 1px; fill: #F8FAFC; }
+.pulse { fill: none; stroke: #2DD4BF; stroke-width: 2; transform-box: fill-box; transform-origin: center;
+         animation: pulse 2.4s ease-out infinite, ring 7s infinite; }
+@keyframes pulse { from { opacity: .6; } to { transform: scale(1.9); opacity: 0; } }
+@keyframes ring { 0%, 56% { stroke: #2DD4BF; } 60%, 96% { stroke: #FB923C; } 100% { stroke: #2DD4BF; } }
+.ok { animation: ok 7s infinite; }
+.bad { opacity: 0; animation: bad 7s infinite; }
+@keyframes ok { 0%, 56% { opacity: 1; } 60%, 96% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes bad { 0%, 56% { opacity: 0; } 60%, 96% { opacity: 1; } 100% { opacity: 0; } }
+.state { font-size: 14px; font-weight: 800; letter-spacing: 2px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }</style>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0B1220"/><stop offset="1" stop-color="#0F2E35"/>
+</linearGradient>
+<linearGradient id="accent" x1="0" x2="1">
+<stop offset="0" stop-color="#2DD4BF"/><stop offset="1" stop-color="#FB923C"/>
+</linearGradient>
+<pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+<path d="M32 0H0V32" fill="none" stroke="#FFFFFF" stroke-opacity=".045"/>
+</pattern>
+<filter id="soft" x="-2" y="-2" width="5" height="5">
+<feGaussianBlur stdDeviation="2.2" result="blur"/>
+<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<clipPath id="card"><rect width="1200" height="360" rx="18"/></clipPath>
+<clipPath id="lane"><rect x="1" y="1" width="238" height="62" rx="9"/></clipPath>
+<radialGradient id="glow">
+<stop offset="0" stop-color="#2DD4BF" stop-opacity=".22"/><stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="shine" x1="0" x2="1">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".42" stop-color="#FFFFFF" stop-opacity="0"/>
+<stop offset=".5" stop-color="#FFFFFF" stop-opacity=".55"/><stop offset=".58" stop-color="#FFFFFF" stop-opacity="0"/>
+<stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+<animateTransform attributeName="gradientTransform" type="translate" values="-1 0;-1 0;1 0;1 0"
+ keyTimes="0;.18;.5;1" dur="7s" repeatCount="indefinite"/>
+</linearGradient>
+</defs>
+<g clip-path="url(#card)">
+<rect width="1200" height="360" fill="url(#bg)"/>
+<rect width="1200" height="360" fill="url(#grid)"/>
+
+<text x="56" y="84" class="kicker rise">HOCHSCHULE DARMSTADT · AUTFAB ST60 PRESS STATION</text>
+<g class="rise" style="animation-delay:.12s">
+<text x="53" y="150" class="title" fill="#F8FAFC">Machine Learning</text>
+</g>
+<g class="rise" style="animation-delay:.24s">
+<text x="53" y="212" class="title" fill="url(#accent)">in Manufacturing</text>
+<text x="53" y="212" class="title" fill="url(#shine)">in Manufacturing</text>
+</g>
+<text x="57" y="252" class="sub rise"
+ style="animation-delay:.38s">Real-plant vs. digital-twin training data for fault detection</text>
+<g class="rise" style="animation-delay:0.55s"><rect x="56" y="284" width="152" height="34" rx="17" class="chip"/><text x="132" y="306" text-anchor="middle" class="chip-text">97 recordings</text></g><g class="rise" style="animation-delay:0.65s"><rect x="220" y="284" width="162" height="34" rx="17" class="chip"/><text x="301" y="306" text-anchor="middle" class="chip-text">51 PLC signals</text></g><g class="rise" style="animation-delay:0.75s"><rect x="394" y="284" width="115" height="34" rx="17" class="chip"/><text x="451.5" y="306" text-anchor="middle" class="chip-text">9 classes</text></g><g class="rise" style="animation-delay:0.85s"><rect x="521" y="284" width="162" height="34" rx="17" class="chip"/><text x="602" y="306" text-anchor="middle" class="chip-text">100 benchmarks</text></g>
+<circle cx="1040" cy="183" r="130" fill="url(#glow)"/>
+<g transform="translate(700 96)"><text y="-12" class="lane" fill="#2DD4BF">REAL PLANT</text><text x="240" y="-12" text-anchor="end" class="lane-note">ST60 · S7-1500</text><rect width="240" height="64" rx="10" fill="#FFFFFF" fill-opacity=".04" stroke="#2DD4BF" stroke-opacity=".4" style="animation: ring 7s infinite"/><g clip-path="url(#lane)"><g class="ok"><path d="M0 50.0 L3 51.0 L6 50.9 L9 47.8 L12 50.2 L15 51.0 L18 50.5 L21 49.3 L24 48.4 L27 51.8 L30 50.4 L33 49.3 L36 45.1 L39 40.1 L42 36.0 L45 26.7 L48 21.1 L51 16.3 L54 9.9 L57 10.7 L60 9.2 L63 13.3 L66 15.0 L69 14.3 L72 13.1 L75 12.7 L78 16.0 L81 14.1 L84 13.1 L87 13.3 L90 14.4 L93 15.8 L96 12.4 L99 13.3 L102 14.5 L105 15.0 L108 14.2 L111 11.8 L114 14.9 L117 15.0 L120 14.0 L123 13.0 L126 13.1 L129 16.2 L132 13.8 L135 13.0 L138 13.5 L141 14.7 L144 15.6 L147 12.2 L150 13.6 L153 20.7 L156 26.9 L159 31.9 L162 36.0 L165 45.3 L168 55.9 L171 53.7 L174 51.8 L177 51.2 L180 52.9 L183 49.4 L186 49.0 L189 49.7 L192 50.9 L195 51.3 L198 48.0 L201 49.9 L204 50.9 L207 50.7 L210 49.6 L213 48.2 L216 51.6 L219 50.7 L222 49.5 L225 49.0 L228 49.8 L231 52.2 L234 49.1 L237 49.0 L240 50.0 L243 51.0 L246 50.9 L249 47.8 L252 50.2 L255 51.0 L258 50.5 L261 49.3 L264 48.4 L267 51.8 L270 50.4 L273 49.3 L276 45.1 L279 40.1 L282 36.0 L285 26.7 L288 21.1 L291 16.3 L294 9.9 L297 10.7 L300 9.2 L303 13.3 L306 15.0 L309 14.3 L312 13.1 L315 12.7 L318 16.0 L321 14.1 L324 13.1 L327 13.3 L330 14.4 L333 15.8 L336 12.4 L339 13.3 L342 14.5 L345 15.0 L348 14.2 L351 11.8 L354 14.9 L357 15.0 L360 14.0 L363 13.0 L366 13.1 L369 16.2 L372 13.8 L375 13.0 L378 13.5 L381 14.7 L384 15.6 L387 12.2 L390 13.6 L393 20.7 L396 26.9 L399 31.9 L402 36.0 L405 45.3 L408 55.9 L411 53.7 L414 51.8 L417 51.2 L420 52.9 L423 49.4 L426 49.0 L429 49.7 L432 50.9 L435 51.3 L438 48.0 L441 49.9 L444 50.9 L447 50.7 L450 49.6 L453 48.2 L456 51.6 L459 50.7 L462 49.5 L465 49.0 L468 49.8 L471 52.2 L474 49.1 L477 49.0 L480 50.0" class="trace" stroke="#2DD4BF" style="animation-duration:5.5s"/></g><g class="bad"><path d="M0 27.3 H240" class="trace" stroke="#FB923C" style="animation:none"/><text x="230" y="56" text-anchor="end" class="frozen">READING FROZEN AT 63 %</text></g></g></g>
+<g transform="translate(700 206)"><text y="-12" class="lane" fill="#FB923C">DIGITAL TWIN</text><text x="240" y="-12" text-anchor="end" class="lane-note">SIMIT · NX MCD</text><rect width="240" height="64" rx="10" fill="#FFFFFF" fill-opacity=".04" stroke="#FB923C" stroke-opacity=".4"/><g clip-path="url(#lane)"><path d="M0 50 L34 50 L52 14 L150 14 L168 50 L274 50 L292 14 L390 14 L408 50 L480 50" class="trace" stroke="#FB923C" style="animation-duration:5.0s"/></g></g>
+<path d="M940 128 C975 128 972 176 1000 179" class="wire"/>
+<path d="M940 238 C975 238 972 190 1000 187" class="wire"/>
+<path d="M1040 223 L1040 258" class="wire"/>
+<circle cx="1040" cy="183" r="40" class="pulse"/>
+<circle cx="1040" cy="183" r="40" class="core"/>
+<text x="1040" y="191" text-anchor="middle" class="core-text">ML</text>
+<circle r="3.6" fill="#5EEAD4" filter="url(#soft)"><animateMotion path="M940 128 C975 128 972 176 1000 179" dur="1.8s" begin="0s" repeatCount="indefinite"/></circle>
+<circle r="3.6" fill="#FDBA74" filter="url(#soft)"><animateMotion path="M940 238 C975 238 972 190 1000 187" dur="1.8s" begin="-0.9s" repeatCount="indefinite"/></circle>
+<circle r="3.6" fill="#F8FAFC" filter="url(#soft)"><animateMotion path="M1040 223 L1040 258" dur="1.2s" begin="-0.3s" repeatCount="indefinite"/></circle>
+<g class="ok"><rect x="940" y="258" width="200" height="34" rx="17" fill="#2DD4BF" fill-opacity=".14" stroke="#2DD4BF"/><circle cx="964" cy="275" r="5" fill="#2DD4BF"/><text x="1050" y="280" text-anchor="middle" class="state" fill="#5EEAD4">NORMAL</text></g>
+<g class="bad"><rect x="940" y="258" width="200" height="34" rx="17" fill="#FB923C" fill-opacity=".14" stroke="#FB923C"/><circle cx="964" cy="275" r="5" fill="#FB923C"/><text x="1050" y="280" text-anchor="middle" class="state" fill="#FDBA74">FAULT DETECTED</text></g>
+
+</g>
+</svg>

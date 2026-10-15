@@ -1,13 +1,17 @@
-# Machine Learning in Manufacturing
+<h1 align="center">
+  <img src="docs/images/banner.svg" width="100%" alt="Machine Learning in Manufacturing: Real-Plant vs. Digital-Twin Training Data">
+</h1>
 
-### Real-Plant vs. Digital-Twin Training Data
+<p align="center">
+  <img alt="Python 3.10+" src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white">
+  <img alt="scikit-learn" src="https://img.shields.io/badge/ML-scikit--learn-F7931E?logo=scikitlearn&logoColor=white">
+  <img alt="MQTT streaming" src="https://img.shields.io/badge/Streaming-MQTT-16867A">
+  <img alt="Digital twin: TIA Portal, SIMIT, NX MCD" src="https://img.shields.io/badge/Digital%20twin-TIA%20Portal%20%C2%B7%20SIMIT%20%C2%B7%20NX%20MCD-0F766E">
+  <img alt="Linted with Ruff" src="https://img.shields.io/badge/Lint-Ruff-D7FF64?logo=ruff&logoColor=black">
+  <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-555555">
+</p>
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/ML-scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
-![MQTT](https://img.shields.io/badge/Streaming-MQTT-16867A)
-![License](https://img.shields.io/badge/License-MIT-555555)
-
-**Can a model trained on a virtual machine recognize faults on the real one?**
+<p align="center"><b>Can a model trained on a virtual machine recognize faults on the real one?</b></p>
 
 This project investigates that question on an industrial pressing station. It connects a Siemens-based virtual commissioning workflow to a reproducible Python fault-classification pipeline, compares real-plant and digital-twin training data, and runs the resulting detector on an MQTT stream.
 
@@ -23,9 +27,14 @@ The repository includes **97 recorded experiments, 51 process signals, nine oper
 
 The ST60 station presses a relay into its socket on a shuttle. The digital twin reproduces the station's motion, control interfaces, and selected faults using NX Mechatronics Concept Designer, SIMIT, and PLCSIM Advanced. Both domains expose a common PLC telemetry contract.
 
-<p align="center"><img src="docs/images/press_station.png" width="600" alt="ST60 pressing station in the original NX MCD digital twin"></p>
+<p align="center"><img src="docs/images/twin_cycle.gif" width="100%" alt="The NX MCD digital twin runs one normal press cycle while the PLC signals recorded during the same run are drawn alongside"></p>
 
-*The project station model in NX MCD. See the [architecture guide](docs/architecture.md) for signal-level connections.*
+*The NX MCD digital twin running one normal press cycle in real time, next to the PLC telemetry the data acquisition client recorded during that run ([dt_normal_cycle.txt](data/raw_examples/dt_normal_cycle.txt)). The recording starts when the shuttle reports in station and stops when it leaves. Only changed messages are stored, one tick each. The footage is cropped from a project screen recording; see the [architecture guide](docs/architecture.md) for signal-level connections.*
+
+<p align="center"><img src="docs/images/pipeline.svg" width="100%" alt="Data flow: the real plant and the digital twin publish PLC telemetry over MQTT for recordings, training and live detection"></p>
+
+<details>
+<summary>The same flow as a Mermaid diagram</summary>
 
 ```mermaid
 flowchart LR
@@ -48,7 +57,15 @@ flowchart LR
     Live --> Output[Console and optional JSON topic]
 ```
 
+</details>
+
 **Monitoring only:** predictions do not control actuators or replace the station's safety PLC, interlocks, or emergency-stop circuit.
+
+### How a Twin Run Is Recorded
+
+<p align="center"><img src="docs/images/daq_handshake.svg" width="100%" alt="Sequence diagram: SIMIT test script, shared memory, data acquisition client and PLC telemetry during one digital-twin recording"></p>
+
+SIMIT scenario scripts and the data acquisition (DAQ) client coordinate through command and acknowledgement bytes in shared memory. The shuttle-in-station signal in the PLC telemetry starts and stops each recording. Transcribed scenario scripts are in [simit/](simit/README.md).
 
 ## Run It
 
@@ -76,6 +93,8 @@ ml-manufacturing benchmark --windows 0 3 5 10 20 --out results/local_benchmark.c
 `0` means no windowing; `3` means the three most recent samples. Windows stay inside each recording, and their label is the last sample's label.
 
 ## What the Experiments Show
+
+<p align="center"><img src="docs/images/results_bars.svg" width="100%" alt="SVC test accuracy for each combination of training and test domain at a three-message window"></p>
 
 Fresh benchmark, seed 42, window size 3. These are held-out recording results, not production reliability guarantees.
 
@@ -109,6 +128,10 @@ ml-manufacturing replay data/real_plant/test/rp_c08_run4.csv --host localhost
 
 Both commands default to `Station60_Press_MQTT_Topic`. Playback uses recorded timestamps when present and synthetic pacing otherwise. See [MQTT operation](docs/mqtt.md) for authentication, prediction messages, and safe lab deployment.
 
+<p align="center"><img src="docs/images/live_terminal.svg" width="100%" alt="Terminal session: the detector prints its predictions while a held-out emergency-stop recording from the plant is replayed over MQTT"></p>
+
+*The same two commands replaying a different held-out plant run, an emergency stop (`rp_c06_run3.csv`). The terminal output is generated by the package's own streaming code. The detector reports the emergency stop one message after its labelled onset at 2.2 s. The brief press-arm alarm at 0.76 s is a false positive: the arm is already moving down, but the position reading has not updated yet.*
+
 ## Inside the Repository
 
 | Path | Contents |
@@ -120,7 +143,7 @@ Both commands default to `Station60_Press_MQTT_Topic`. Playback uses recorded ti
 | [docs/results.md](docs/results.md) | Findings, evaluation protocol, caveats and reproducibility |
 | [simit/](simit/README.md) | Simulation-only fault-scenario script transcriptions |
 | [plc/](plc/README.md) | FC9 SCL telemetry body and its signal-order contract |
-| [scripts/](scripts/) | Dataset normalization and reproducible figure generation |
+| [scripts/](scripts/) | Dataset normalization, reproducible figures, and the animated README artwork |
 | [tests/](tests/) | Parser, schema, window alignment, detector, CLI and streaming tests |
 
 ## Engineering Choices

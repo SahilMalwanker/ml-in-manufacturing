@@ -99,6 +99,8 @@ python scripts/make_figures.py
 
 The figure script reads the checked-in `results/benchmark.csv`, then retrains selected models for confusion matrices, per-class recall, the clipping experiment, a decision-tree illustration, and an offline streaming trace. It refreshes those derived tables and images in place. To visualize a new benchmark, deliberately replace the benchmark input after preserving any results you need.
 
+`python scripts/make_readme_art.py` redraws the animated README SVGs from the manifest, the benchmark table, and a fresh streaming run. Their console lines therefore show this machine's per-message latencies. `scripts/make_twin_cycle.py` documents how the digital-twin GIF was cut from a project screen recording, which is not redistributed. It needs that recording and ffmpeg.
+
 The included benchmark was reproduced with **CPython 3.14.4, NumPy 2.5.3, pandas 3.0.6, and scikit-learn 1.9.1** on Windows. All 100 non-timing result rows matched a fresh run in that environment. Other supported Python/dependency combinations may choose different tree splits or neural-network solutions; a fixed seed alone does not promise equality across versions.
 
 `train_s` measures scaler fitting and classifier training, excluding file loading and window assembly. `predict_us_per_window` divides a batch's transformation/prediction time by its window count. It excludes broker transport, acquisition delay, buffer warm-up, and output handling. It is a throughput measure, not a worst-case live latency guarantee; timings are machine-dependent.
